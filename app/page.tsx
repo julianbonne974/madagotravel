@@ -80,6 +80,7 @@ export default function Home() {
   const WeatherIcon = destination.weather.icon;
 
   const nextDestination = () => {
+    setShowAbout(false);
     setCurrentDestination((prev) => (prev + 1) % destinations.length);
   };
 
@@ -87,12 +88,23 @@ export default function Home() {
     setCurrentDestination((prev) => (prev - 1 + destinations.length) % destinations.length);
   };
 
+  const showCircuits = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowAbout(false);
+  };
+
+  const showAboutPage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowAbout(true);
+  };
+
   // Page À propos
   if (showAbout) {
     return (
-      <div className="relative min-h-screen overflow-hidden bg-black">
-        {/* Section image gauche (70%) - Image de Madagascar */}
-        <div className="fixed inset-y-0 left-0 right-0 lg:right-[40%] z-0">
+      <div className="relative min-h-screen bg-black">
+        <div className="flex flex-col lg:flex-row min-h-screen">
+          {/* Section image gauche (70%) - Image de Madagascar - EN HAUT SUR MOBILE */}
+          <div className="relative w-full lg:w-[60%] min-h-screen z-0">
           <div className="relative w-full h-full">
             {/* Image de fond */}
             <img
@@ -104,8 +116,25 @@ export default function Home() {
             {/* Overlay gradient - Plus sombre pour meilleure visibilité */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
 
-            {/* Logo en haut à gauche */}
-            <div className="absolute top-8 left-8 z-20">
+            {/* NAVBAR en haut - VISIBLE UNIQUEMENT SUR MOBILE */}
+            <div className="absolute top-0 left-0 right-0 z-30 lg:hidden">
+              <div className="bg-black/40 backdrop-blur-sm border-b border-white/20 px-4 py-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm">🐒</span>
+                    <span className="text-xs font-bold text-white">Madagotravel</span>
+                  </div>
+                  <nav className="flex items-center gap-4">
+                    <a href="#apropos" className="text-xs font-medium text-white hover:text-white/80">À propos</a>
+                    <a href="#circuits" onClick={showCircuits} className="text-xs font-medium text-white hover:text-white/80 cursor-pointer">Circuits</a>
+                    <a href="#contact" className="text-xs font-medium text-white hover:text-white/80">Contact</a>
+                  </nav>
+                </div>
+              </div>
+            </div>
+
+            {/* Logo en haut à gauche - DESKTOP UNIQUEMENT */}
+            <div className="hidden lg:block absolute top-8 left-8 z-20">
               <div className="bg-white/15 backdrop-blur-md rounded-2xl px-5 py-4 border border-white/30 shadow-2xl">
                 <div className="flex items-center gap-2">
                   <LemurLogo />
@@ -114,8 +143,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Contenu central */}
-            <div className="absolute inset-0 z-10 flex items-center px-8 lg:px-16">
+            {/* Contenu - MOBILE: flex column, DESKTOP: absolute centered */}
+            <div className="lg:absolute lg:inset-0 z-10 flex flex-col lg:flex-row lg:items-center px-4 lg:px-16 pt-16 lg:pt-0 pb-8 lg:pb-0 min-h-screen lg:min-h-0">
               <div className="max-w-2xl">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -123,27 +152,53 @@ export default function Home() {
                   transition={{ duration: 0.8 }}
                 >
                   {/* Titre principal - Bien visible */}
-                  <h1 className="text-6xl lg:text-8xl font-black text-white mb-8 leading-tight drop-shadow-2xl">
+                  <h1 className="text-4xl lg:text-8xl font-black text-white mb-6 lg:mb-8 leading-tight drop-shadow-2xl">
                     Découvrez<br />Madagascar
                   </h1>
 
                   {/* Sous-titre - Bien visible */}
-                  <p className="text-2xl lg:text-3xl text-white font-semibold mb-6 leading-relaxed drop-shadow-lg">
+                  <p className="text-lg lg:text-3xl text-white font-semibold mb-4 lg:mb-6 leading-relaxed drop-shadow-lg">
                     Vivez une aventure unique avec vos guides passionnés
                   </p>
 
                   {/* Description */}
-                  <p className="text-lg lg:text-xl text-white/95 mb-12 leading-relaxed max-w-xl drop-shadow-md">
+                  <p className="text-sm lg:text-xl text-white/95 mb-8 lg:mb-12 leading-relaxed max-w-xl drop-shadow-md">
                     Alex et Patty, guides malgaches passionnés, vous accompagnent pour explorer les trésors cachés de l'île Rouge. Circuits authentiques, rencontres inoubliables et moments magiques vous attendent.
                   </p>
 
                   {/* CTA - Plus visible */}
                   <button
                     onClick={() => setShowAbout(false)}
-                    className="group bg-[#D4AF37] text-gray-900 px-12 py-6 rounded-full font-black text-xl hover:bg-[#D4AF37]/90 transition-all flex items-center gap-3 shadow-2xl hover:shadow-[#D4AF37]/50 hover:scale-105"
+                    className="group px-6 py-3 lg:px-12 lg:py-6 rounded-full font-black text-base lg:text-xl transition-all flex items-center gap-2 lg:gap-3 shadow-2xl hover:scale-105 relative z-50 cursor-pointer"
+                    style={{
+                      background: '#D4AF37',
+                      backgroundColor: '#D4AF37',
+                      backgroundImage: 'none',
+                      color: '#ffffff',
+                      textShadow: 'none',
+                      filter: 'none',
+                      border: 'none',
+                      WebkitTextFillColor: '#ffffff',
+                      WebkitBackgroundClip: 'unset'
+                    } as React.CSSProperties}
                   >
-                    Découvrir nos circuits
-                    <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
+                    <span style={{
+                      color: '#ffffff',
+                      textShadow: 'none',
+                      backgroundImage: 'none',
+                      WebkitTextFillColor: '#ffffff',
+                      WebkitBackgroundClip: 'unset'
+                    } as React.CSSProperties}>
+                      Découvrir nos circuits
+                    </span>
+                    <ArrowRight
+                      className="h-5 w-5 lg:h-6 lg:w-6 group-hover:translate-x-2 transition-transform"
+                      style={{
+                        color: '#ffffff',
+                        filter: 'none',
+                        stroke: '#ffffff'
+                      }}
+                    />
                   </button>
                 </motion.div>
               </div>
@@ -151,15 +206,14 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Panneau latéral droit - Alex & Patty */}
-        <div className="fixed inset-y-0 right-0 w-full lg:w-[40%] bg-[#F5F1E8] z-30 overflow-y-auto">
+          {/* Panneau latéral droit - Alex & Patty - EN BAS SUR MOBILE */}
+          <div className="relative w-full lg:w-[40%] bg-[#F5F1E8] overflow-y-auto">
           <div className="min-h-full flex flex-col">
-            {/* NAVBAR en haut */}
-            <div className="bg-white/40 backdrop-blur-sm border-b border-gray-300/30 px-6 lg:px-8 py-4">
+            {/* NAVBAR en haut - VISIBLE UNIQUEMENT SUR DESKTOP */}
+            <div className="hidden lg:block bg-white/40 backdrop-blur-sm border-b border-gray-300/30 px-6 lg:px-8 py-4">
               <nav className="flex items-center justify-center gap-6">
                 <a href="#apropos" className="text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer">À propos</a>
-                <a href="#circuits" onClick={(e) => { e.preventDefault(); setShowAbout(false); }} className="text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer">Circuits</a>
-                <a href="#destinations" className="text-sm font-medium text-gray-700 hover:text-gray-900">Destinations</a>
+                <a href="#circuits" onClick={showCircuits} className="text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer">Circuits</a>
                 <a href="#contact" className="text-sm font-medium text-gray-700 hover:text-gray-900">Contact</a>
               </nav>
             </div>
@@ -222,6 +276,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      </div>
     );
   }
 
@@ -249,8 +304,25 @@ export default function Home() {
             {/* Overlay gradient subtil */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
 
-            {/* Logo en haut à gauche */}
-            <div className="absolute top-8 left-8 flex items-center gap-3 z-20">
+            {/* NAVBAR en haut - VISIBLE UNIQUEMENT SUR MOBILE */}
+            <div className="absolute top-0 left-0 right-0 z-30 lg:hidden">
+              <div className="bg-black/40 backdrop-blur-sm border-b border-white/20 px-4 py-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm">🐒</span>
+                    <span className="text-xs font-bold text-white">Madagotravel</span>
+                  </div>
+                  <nav className="flex items-center gap-4">
+                    <a href="#apropos" onClick={showAboutPage} className="text-xs font-medium text-white hover:text-white/80 cursor-pointer">À propos</a>
+                    <a href="#circuits" className="text-xs font-medium text-white hover:text-white/80">Circuits</a>
+                    <a href="#contact" className="text-xs font-medium text-white hover:text-white/80">Contact</a>
+                  </nav>
+                </div>
+              </div>
+            </div>
+
+            {/* Logo en haut à gauche - DESKTOP UNIQUEMENT */}
+            <div className="hidden lg:flex absolute top-8 left-8 items-center gap-3 z-20">
               <div className="bg-white/10 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/20">
                 <div className="flex items-center gap-2">
                   <LemurLogo />
@@ -344,17 +416,89 @@ export default function Home() {
       {/* Panneau latéral droit fixe (30%) - Style Pérou */}
       <div className="fixed inset-y-0 right-0 w-full lg:w-[40%] bg-[#F5F1E8] z-30 overflow-y-auto">
         <div className="min-h-full flex flex-col">
-          {/* NAVBAR en haut */}
-          <div className="bg-white/40 backdrop-blur-sm border-b border-gray-300/30 px-6 lg:px-8 py-4">
+          {/* NAVBAR en haut - VISIBLE SUR MOBILE */}
+          <div className="lg:hidden bg-white/40 backdrop-blur-sm border-b border-gray-300/30 px-4 py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm">🐒</span>
+                <span className="text-xs font-bold text-gray-900">Madagotravel</span>
+              </div>
+              <nav className="flex items-center gap-4">
+                <a href="#apropos" onClick={showAboutPage} className="text-xs font-medium text-gray-700 hover:text-gray-900 cursor-pointer">À propos</a>
+                <a href="#circuits" className="text-xs font-medium text-gray-700 hover:text-gray-900">Circuits</a>
+                <a href="#contact" className="text-xs font-medium text-gray-700 hover:text-gray-900">Contact</a>
+              </nav>
+            </div>
+          </div>
+
+          {/* NAVBAR en haut - VISIBLE UNIQUEMENT SUR DESKTOP */}
+          <div className="hidden lg:block bg-white/40 backdrop-blur-sm border-b border-gray-300/30 px-6 lg:px-8 py-4">
             <nav className="flex items-center justify-center gap-6">
-              <a href="#apropos" onClick={(e) => { e.preventDefault(); setShowAbout(true); }} className="text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer">À propos</a>
+              <a href="#apropos" onClick={showAboutPage} className="text-sm font-medium text-gray-700 hover:text-gray-900 cursor-pointer">À propos</a>
               <a href="#circuits" className="text-sm font-medium text-gray-700 hover:text-gray-900">Circuits</a>
-              <a href="#destinations" className="text-sm font-medium text-gray-700 hover:text-gray-900">Destinations</a>
               <a href="#contact" className="text-sm font-medium text-gray-700 hover:text-gray-900">Contact</a>
             </nav>
           </div>
 
-          {/* Header avec localisation et coordonnées */}
+          {/* Image de destination - MOBILE UNIQUEMENT */}
+          <div className="lg:hidden border-b border-gray-300/30">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`mobile-image-${destination.id}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="relative w-full h-60"
+              >
+                <img
+                  src={destination.image}
+                  alt={destination.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Navigation circuits - MOBILE UNIQUEMENT */}
+          <div className="lg:hidden bg-white/50 backdrop-blur-sm border-b border-gray-300/30 px-6 py-4">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={prevDestination}
+                className="w-10 h-10 rounded-full bg-gray-900/10 backdrop-blur-md border border-gray-900/20 flex items-center justify-center hover:bg-gray-900/20 transition-all active:scale-95"
+              >
+                <ArrowLeft className="h-5 w-5 text-gray-900" />
+              </button>
+
+              <div className="flex flex-col items-center">
+                <span className="text-xs text-gray-600 uppercase tracking-wide font-semibold mb-1">
+                  Circuit suivant
+                </span>
+                <div className="flex gap-1.5">
+                  {destinations.map((_, index) => (
+                    <div
+                      key={index}
+                      className={`h-1 rounded-full transition-all ${
+                        index === currentDestination
+                          ? "w-6 bg-gray-900"
+                          : "w-1 bg-gray-400"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={nextDestination}
+                className="w-10 h-10 rounded-full bg-gray-900/10 backdrop-blur-md border border-gray-900/20 flex items-center justify-center hover:bg-gray-900/20 transition-all active:scale-95"
+              >
+                <ArrowRight className="h-5 w-5 text-gray-900" />
+              </button>
+            </div>
+          </div>
+
+          {/* Header avec localisation */}
           <div className="p-6 lg:p-8 border-b border-gray-300/30">
             <AnimatePresence mode="wait">
               <motion.div
@@ -363,10 +507,9 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="flex items-start gap-8"
               >
-                {/* Localisation à gauche */}
-                <div className="bg-white/50 rounded-2xl p-4 flex-shrink-0">
+                {/* Localisation */}
+                <div className="bg-white/50 rounded-2xl p-4 inline-block">
                   <h3 className="text-xs font-bold text-gray-900 mb-2 uppercase tracking-wider">
                     Localisation
                   </h3>
@@ -375,18 +518,6 @@ export default function Home() {
                     <br />
                     Madagascar
                   </p>
-                </div>
-
-                {/* Coordonnées à droite */}
-                <div className="flex gap-8 flex-1">
-                  <div>
-                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Latitude</p>
-                    <p className="text-sm font-semibold text-gray-900">{destination.coords.lat}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Longitude</p>
-                    <p className="text-sm font-semibold text-gray-900">{destination.coords.lng}</p>
-                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
