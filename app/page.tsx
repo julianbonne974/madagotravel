@@ -102,9 +102,9 @@ export default function Home() {
   if (showAbout) {
     return (
       <div className="relative min-h-screen bg-black">
-        <div className="flex flex-col lg:flex-row min-h-screen">
+        <div className="flex flex-col lg:flex-row lg:min-h-screen">
           {/* Section image gauche (70%) - Image de Madagascar - EN HAUT SUR MOBILE */}
-          <div className="relative w-full lg:w-[60%] min-h-screen z-0">
+          <div className="relative w-full lg:w-[60%] lg:min-h-screen z-0">
           <div className="relative w-full h-full">
             {/* Image de fond */}
             <img
@@ -121,7 +121,9 @@ export default function Home() {
               <div className="bg-black/40 backdrop-blur-sm border-b border-white/20 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-sm">🐒</span>
+                    <div className="w-5 h-5 flex items-center justify-center">
+                      <LemurLogo />
+                    </div>
                     <span className="text-xs font-bold text-white">Madagotravel</span>
                   </div>
                   <nav className="flex items-center gap-4">
@@ -144,7 +146,7 @@ export default function Home() {
             </div>
 
             {/* Contenu - MOBILE: flex column, DESKTOP: absolute centered */}
-            <div className="lg:absolute lg:inset-0 z-10 flex flex-col lg:flex-row lg:items-center px-4 lg:px-16 pt-16 lg:pt-0 pb-8 lg:pb-0 min-h-screen lg:min-h-0">
+            <div className="lg:absolute lg:inset-0 z-10 flex flex-col lg:flex-row lg:items-center px-4 lg:px-16 pt-16 lg:pt-0 pb-8 lg:pb-0 lg:min-h-0">
               <div className="max-w-2xl">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -225,9 +227,33 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 {/* Titre */}
-                <h2 className="text-5xl lg:text-6xl font-black text-gray-900 mb-12 leading-tight">
+                <h2 className="text-5xl lg:text-6xl font-black text-gray-900 mb-8 leading-tight">
                   Alex & Patty
                 </h2>
+
+                {/* Photos des guides */}
+                <div className="flex gap-6 mb-8">
+                  <div className="flex flex-col items-center">
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#D4AF37] shadow-lg mb-3">
+                      <img
+                        src="/images/alex.jpg"
+                        alt="Alex - Guide touristique"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <span className="text-sm font-bold text-gray-900">Alex</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#D4AF37] shadow-lg mb-3">
+                      <img
+                        src="/images/patty.jpg"
+                        alt="Patty - Guide touristique"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <span className="text-sm font-bold text-gray-900">Patty</span>
+                  </div>
+                </div>
 
                 {/* Description */}
                 <div className="space-y-6 text-gray-700 leading-relaxed">
@@ -309,7 +335,9 @@ export default function Home() {
               <div className="bg-black/40 backdrop-blur-sm border-b border-white/20 px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-sm">🐒</span>
+                    <div className="w-5 h-5 flex items-center justify-center">
+                      <LemurLogo />
+                    </div>
                     <span className="text-xs font-bold text-white">Madagotravel</span>
                   </div>
                   <nav className="flex items-center gap-4">
@@ -420,7 +448,9 @@ export default function Home() {
           <div className="lg:hidden bg-white/40 backdrop-blur-sm border-b border-gray-300/30 px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <span className="text-sm">🐒</span>
+                <div className="w-5 h-5 flex items-center justify-center">
+                  <LemurLogo />
+                </div>
                 <span className="text-xs font-bold text-gray-900">Madagotravel</span>
               </div>
               <nav className="flex items-center gap-4">
